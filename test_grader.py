@@ -7,7 +7,8 @@ import imutils
 
 # create argument parser
 ap = argparse.ArgumentParser()
-ap.add_argument('-i', '--image', help="path to the image")
+ap.add_argument('-i', '--image', required=True, help="path to the image")
+ap.add_argument('-c', '--crop', type=int, help="whether to crop image 1 if yes 0 if no")
 args = vars(ap.parse_args())
 
 #define the answer key
@@ -15,7 +16,10 @@ args = vars(ap.parse_args())
 ANSWER_KEY = { 0:1, 1:4, 2:0, 3:3, 4:1 }
 
 #preprocess the image
-image = cv2.imread(args["image"])
+if args["crop"] == 1:
+    image = imutils.resize(cv2.imread(args["image"]), width=700)
+else:
+    image = cv2.imread(args["image"])
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5,5), 0)
 edged = cv2.Canny(blurred, 75, 200)
