@@ -25,7 +25,7 @@ cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
 cnts = imutils.grab_contours(cnts)
 #contour of the document i.e. answer sheet
 docCnt = None
-
+#paper_contours = image.copy()
 if len(cnts) > 0:
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
 
@@ -35,15 +35,17 @@ if len(cnts) > 0:
 
         if len(approx) == 4:
             docCnt = approx
+            #cv2.drawContours(paper_contours, [cnt], -1, (0,0,255), 3)
             break
 
 paper = four_point_transform(image, docCnt.reshape((4, 2)))
 warped = four_point_transform(gray, docCnt.reshape((4, 2)))
 
 thresh = cv2.threshold(warped, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
-# cv2.imshow('image' ,paper)
-# cv2.imshow('image_1' ,warped)
-# cv2.imshow('image_2' ,thresh)
+# cv2.imshow('Paper Contours Extracted', paper_contours)
+# cv2.imshow('Paper Extracted Original' ,paper)
+# cv2.imshow('Paper Extracted Grayscale' ,warped)
+# cv2.imshow('Threshold' ,thresh)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
