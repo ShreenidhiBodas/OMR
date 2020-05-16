@@ -75,7 +75,7 @@ The birds eye view of the exam sheet is:
 
 After this, we threshold the image using Binary / Otsu threshold  
 
-![Thresholded image](/images/threshold.png)  
+![Thresholded image](/images/Threshold.png)  
 
   
 
