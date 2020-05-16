@@ -75,7 +75,7 @@ The birds eye view of the exam sheet is:
 
 After this, we threshold the image using Binary / Otsu threshold  
 
-![Thresholded image](/images/Threshold.png)  
+![Thresholded image](/images/Threshold.PNG)  
 
   
 
@@ -107,4 +107,4 @@ for (q, i) in enumerate(np.arange(0, len(question_cnts), 5)):
 ```  
 This arranges the contours in rows, each row corresponding to each question and identifies the filled bubble. `total = cv2.countNonZero(mask)` counts number of non zero pixels in the contour. After this, we compare the filled bubble index to that of the correct answer in our `ANSWER_KEY` and print the corresponding result and draw the appropriate contour on the image.  
   
-![Final Image](/images/result.png)
+![Final Image](/images/Result.PNG)
