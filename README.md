@@ -41,7 +41,8 @@ edged = cv2.Canny(blurred, 75, 200)
 ```  
 By preprocessing, I mean, resizing, blurring, converting the image to grayscale and edge detection.  
 Each of these processes help reduce the complexity of the further operations to be done on the image.  
->Images of the preprocessing done.  
+  
+![Preprocessed](/images/preprocessed.png)  
   
 The next step is to identify the exam sheet present in the image. Here, we use contours to find the exam sheet.  
 ```python
@@ -60,14 +61,22 @@ for cnt in cnts:
 ```  
 The function `cv2.approxPolyDP` approximates the contour ``cnt`` to 2% of the original contour. For more info about this function, visit [here](https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html).  
 Variable `docCnt` now has the contour of the exam paper.
-> Image of exam contour detected.  
+
+![Exam Sheet Contour](/images/sheet_contour.png)  
+
   
 Now, we apply perspective transform on the image to get a birds eye view.
 ```python
 warped = four_point_transform(gray, docCnt.reshape((4, 2)))
-```  
-After this, we threshold the image using Binary / Otsu threshold
-> Thresholded image  
+```    
+The birds eye view of the exam sheet is:  
+
+![Perspective Transform](/images/birds_eye.png)    
+
+After this, we threshold the image using Binary / Otsu threshold  
+
+![Thresholded image](/images/threshold.png)  
+
   
 
 Binarization again allows us to find contours from the image. This time, the contours will be the bubbles from the image. We append all such contours in a list called `questionContours`  
@@ -98,4 +107,4 @@ for (q, i) in enumerate(np.arange(0, len(question_cnts), 5)):
 ```  
 This arranges the contours in rows, each row corresponding to each question and identifies the filled bubble. `total = cv2.countNonZero(mask)` counts number of non zero pixels in the contour. After this, we compare the filled bubble index to that of the correct answer in our `ANSWER_KEY` and print the corresponding result and draw the appropriate contour on the image.  
   
-> Final image.
+![Final Image](/images/result.png)
